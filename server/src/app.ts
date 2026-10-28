@@ -3,24 +3,51 @@ import cors from 'cors';
 
 const app = express();
 
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
+const rawFrontend = (process.env.FRONTEND_URL || '').trim().replace(/\/$/, '');
+const extraOrigins = (process.env.ALLOWED_ORIGINS || '')
+  .split(',')
+  .map(o => o.trim().replace(/\/$/, ''))
+  .filter(Boolean);
+
+const allowedOrigins = new Set<string>([
+  rawFrontend,
+  rawFrontend.startsWith('https://') ? rawFrontend.replace('https://', 'https://www.') : '',
+  rawFrontend.startsWith('https://www.') ? rawFrontend.replace('https://www.', 'https://') : '',
+  rawFrontend.startsWith('http://') ? rawFrontend.replace('http://', 'http://www.') : '',
+  rawFrontend.startsWith('http://www.') ? rawFrontend.replace('http://www.', 'http://') : '',
+  ...extraOrigins,
   'http://localhost:3000',
   'http://localhost:5173',
-].filter(Boolean) as string[];
+].filter(Boolean));
 
 // Middleware
 app.use(cors({
   origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+
+    const cleanOrigin = origin.replace(/\/$/, '');
     if (
-      !origin ||
-      allowedOrigins.includes(origin) ||
-      origin.startsWith('http://localhost:') ||
-      origin.endsWith('.vercel.app')
+      allowedOrigins.has(cleanOrigin) ||
+      cleanOrigin.startsWith('http://localhost:') ||
+      cleanOrigin.endsWith('.vercel.app')
     ) {
       return callback(null, true);
     }
-    return callback(new Error('Not allowed by CORS'));
+
+    // Apex domain match fallback (e.g. yourdomain.com matches www.yourdomain.com)
+    if (rawFrontend) {
+      try {
+        const targetHost = new URL(rawFrontend).hostname.replace(/^www\./, '');
+        const originHost = new URL(cleanOrigin).hostname.replace(/^www\./, '');
+        if (targetHost && targetHost === originHost) {
+          return callback(null, true);
+        }
+      } catch {
+        // invalid URL format, ignore
+      }
+    }
+
+    return callback(new Error(`Not allowed by CORS: ${origin}`));
   },
   credentials: true
 }));
