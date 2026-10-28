@@ -8,12 +8,18 @@
     "dev": "tsx watch src/server.ts",
     "seed": "tsx src/seed.ts",
     "build": "tsc",
+    "postinstall": "tsc",
     "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^26.6.3",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
@@ -21,15 +27,9 @@
     "firebase-admin": "^14.5.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.9.3",
-    "razorpay": "^2.9.8"
-  },
-  "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^26.6.3",
+    "razorpay": "^2.9.8",
     "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
-  }
+    "typescript": "^5.8.2"
+  },
+  "devDependencies": {}
 }
