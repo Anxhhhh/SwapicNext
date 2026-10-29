@@ -6,9 +6,11 @@ import { useAuthStore } from '../store/authStore';
 const Navbar = ({ onExploreClick, onLoginClick, onProfileClick, onHomeClick, activeNav = 'Home', onSearch, onCreateListing }: { onExploreClick?: () => void; onLoginClick?: () => void; onProfileClick?: () => void; onHomeClick?: () => void; activeNav?: string; onSearch?: (q: string) => void; onCreateListing?: () => void }) => {
   const [navSearch, setNavSearch] = React.useState('');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { user, isAuthenticated, logout } = useAuthStore();
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       if (window.scrollY > 60) {
         setIsScrolled(true);
