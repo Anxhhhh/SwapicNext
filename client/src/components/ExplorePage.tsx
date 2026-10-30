@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Search, SlidersHorizontal, MapPin, ChevronDown,
   Plus, X, Star, Heart, Package, Loader2
@@ -7,6 +8,7 @@ import {
 import Navbar from './Navbar';
 import { useListingStore, type Listing } from '../store/listingStore';
 import { useAuthStore } from '../store/authStore';
+import { useLocationStore } from '../store/locationStore';
 import api from '../utils/api';
 
 /* ─────────────────────── Filter Sidebar ─────────────────────── */
@@ -227,8 +229,10 @@ const ExplorePage = ({
   initialCategory?: string;
   initialType?: string;
 }) => {
+  const router = useRouter();
   const { listings, total, loading, fetchListings } = useListingStore();
   const { isAuthenticated } = useAuthStore();
+  const selectedLocation = useLocationStore((s) => s.selectedLocation);
   const [filters, setFilters] = useState<FilterState>({
     txType: initialType || 'All',
     category: initialCategory || 'All categories',
@@ -261,10 +265,33 @@ const ExplorePage = ({
     if (filters.priceMin) params.minPrice = filters.priceMin;
     if (filters.priceMax) params.maxPrice = filters.priceMax;
     if (filters.conditions.length) params.condition = filters.conditions[0];
+    if (selectedLocation && selectedLocation !== 'All India') {
+      params.location = selectedLocation;
+    }
     fetchListings(params);
-  }, [searchQuery, filters, fetchListings]);
+  }, [searchQuery, filters, selectedLocation, fetchListings]);
 
   useEffect(() => { loadListings(); }, [loadListings]);
+
+  const handleItemSelect = (id: string) => {
+    if (onItemClick) {
+      onItemClick(id);
+    } else {
+      router.push(`/item/${id}`);
+    }
+  };
+
+  const handleCreate = () => {
+    if (onCreateListing) {
+      onCreateListing();
+    } else {
+      if (!isAuthenticated) {
+        router.push('/login?redirect=/create');
+      } else {
+        router.push('/create');
+      }
+    }
+  };
 
   const handleSearchChange = (val: string) => {
     setSearchInput(val);
@@ -329,8 +356,8 @@ const ExplorePage = ({
               </span>
               <div className="flex items-center gap-3">
                 <button
-                  onClick={onCreateListing}
-                  className="flex items-center gap-1.5 bg-[#E96B16] text-white px-4 py-1.5 rounded-full text-[13px] font-semibold hover:bg-[#d45d0f] transition-all shadow-sm"
+                  onClick={handleCreate}
+                  className="flex items-center gap-1.5 bg-[#E96B16] text-white px-4 py-1.5 rounded-full text-[13px] font-semibold hover:bg-[#d45d0f] transition-all shadow-sm cursor-pointer"
                 >
                   <Plus size={14} /> List an item
                 </button>
@@ -370,8 +397,8 @@ const ExplorePage = ({
                   {searchQuery ? 'Try different keywords or clear your filters.' : 'Be the first to list an item on Swapic!'}
                 </p>
                 <button
-                  onClick={onCreateListing}
-                  className="bg-[#E96B16] text-white px-6 py-2.5 rounded-full font-semibold text-[14px] hover:bg-[#d45d0f] transition-all shadow-sm"
+                  onClick={handleCreate}
+                  className="bg-[#E96B16] text-white px-6 py-2.5 rounded-full font-semibold text-[14px] hover:bg-[#d45d0f] transition-all shadow-sm cursor-pointer"
                 >
                   + Create First Listing
                 </button>
@@ -385,8 +412,8 @@ const ExplorePage = ({
                   <ItemCard
                     key={item._id}
                     item={item}
-                    onClick={() => onItemClick?.(item._id)}
-                    onLoginRequired={onLoginClick}
+                    onClick={() => handleItemSelect(item._id)}
+                    onLoginRequired={() => (onLoginClick ? onLoginClick() : router.push('/login'))}
                     isAuthenticated={isAuthenticated}
                   />
                 ))}

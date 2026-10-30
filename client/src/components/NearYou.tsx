@@ -1,8 +1,7 @@
 'use client';
 import React, { useState } from "react";
 import { MapPin, ChevronDown, Plus, Navigation } from "lucide-react";
-
-const CITIES = ["Bengaluru", "Mumbai", "Delhi", "Hyderabad", "Chennai", "Pune"];
+import { useLocationStore, POPULAR_INDIAN_CITIES } from "../store/locationStore";
 
 /* ── Decorative dot-grid pattern rendered as SVG ── */
 const DotGrid = () => (
@@ -96,7 +95,7 @@ interface NearYouProps {
 
 /* ── Main Component ── */
 const NearYou = ({ onCreateListing, onExploreClick }: NearYouProps) => {
-  const [city, setCity] = useState("Bengaluru");
+  const { selectedLocation, setLocation } = useLocationStore();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
@@ -120,10 +119,10 @@ const NearYou = ({ onCreateListing, onExploreClick }: NearYouProps) => {
         <div className="relative shrink-0 mt-1">
           <button
             onClick={() => setDropdownOpen((o) => !o)}
-            className="flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-2.5 shadow-sm hover:shadow-md transition-shadow text-[0.88rem] font-semibold text-[#35190F]"
+            className="flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-2.5 shadow-sm hover:shadow-md transition-shadow text-[0.88rem] font-semibold text-[#35190F] cursor-pointer"
           >
             <MapPin size={15} strokeWidth={2.5} className="text-[#E96B16]" />
-            {city}
+            {selectedLocation}
             <ChevronDown
               size={15}
               strokeWidth={2.5}
@@ -132,15 +131,17 @@ const NearYou = ({ onCreateListing, onExploreClick }: NearYouProps) => {
           </button>
 
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded-2xl shadow-2xl z-50 overflow-hidden py-1">
-              {CITIES.map((c) => (
+            <div className="absolute right-0 mt-2 w-56 max-h-64 overflow-y-auto bg-white border border-gray-100 rounded-2xl shadow-2xl z-50 py-1 scrollbar-thin">
+              {POPULAR_INDIAN_CITIES.map((c) => (
                 <button
                   key={c}
-                  onClick={() => { setCity(c); setDropdownOpen(false); }}
-                  className={`w-full text-left px-4 py-2.5 text-[0.88rem] font-medium transition-colors hover:bg-[#FFF6EF] flex items-center gap-2 ${c === city ? "text-[#E96B16] bg-[#FFF6EF]" : "text-[#35190F]"}`}
+                  onClick={() => { setLocation(c); setDropdownOpen(false); }}
+                  className={`w-full text-left px-4 py-2.5 text-[0.88rem] font-medium transition-colors hover:bg-[#FFF6EF] flex items-center justify-between cursor-pointer ${c === selectedLocation ? "text-[#E96B16] bg-[#FFF6EF] font-bold" : "text-[#35190F]"}`}
                 >
-                  {c === city && <MapPin size={12} className="text-[#E96B16]" strokeWidth={2.5} />}
-                  {c}
+                  <span className="flex items-center gap-2">
+                    {c === selectedLocation && <MapPin size={12} className="text-[#E96B16]" strokeWidth={2.5} />}
+                    {c}
+                  </span>
                 </button>
               ))}
             </div>
