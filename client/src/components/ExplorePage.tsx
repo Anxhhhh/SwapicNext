@@ -25,12 +25,12 @@ const CONDITIONS = ['New', 'Like New', 'Good', 'Fair', 'Used'];
 const CATEGORIES = ['All categories', 'Electronics', 'Furniture', 'Clothing', 'Books', 'Sports', 'Toys', 'Home & Living', 'Other'];
 const DISTANCES = ['1 km', '5 km', '10 km', '25 km', '50 km'];
 
-const FilterSidebar = ({
-  filters, setFilters, onClear,
+const FilterControls = ({
+  filters,
+  setFilters,
 }: {
   filters: FilterState;
   setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
-  onClear: () => void;
 }) => {
   const toggle = (c: string) =>
     setFilters(f => ({
@@ -41,8 +41,7 @@ const FilterSidebar = ({
     }));
 
   return (
-    <aside className="w-[220px] shrink-0 bg-white rounded-2xl border border-[#ede8e1] p-5 self-start sticky top-5 text-[#35190F]">
-
+    <>
       {/* Transaction type */}
       <div className="mb-5">
         <p className="text-[13px] font-semibold mb-2.5">Transaction type</p>
@@ -118,8 +117,21 @@ const FilterSidebar = ({
           ))}
         </div>
       </div>
+    </>
+  );
+};
 
-      <button onClick={onClear} className="flex items-center gap-1.5 text-[13px] text-[#654332] hover:text-[#35190F] transition-colors font-medium">
+const FilterSidebar = ({
+  filters, setFilters, onClear,
+}: {
+  filters: FilterState;
+  setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
+  onClear: () => void;
+}) => {
+  return (
+    <aside className="hidden lg:block w-[220px] shrink-0 bg-white rounded-2xl border border-[#ede8e1] p-5 self-start sticky top-5 text-[#35190F]">
+      <FilterControls filters={filters} setFilters={setFilters} />
+      <button onClick={onClear} className="flex items-center gap-1.5 text-[13px] text-[#654332] hover:text-[#35190F] transition-colors font-medium cursor-pointer">
         <X size={14} /> Clear filters
       </button>
     </aside>
@@ -244,7 +256,27 @@ const ExplorePage = ({
   const [sort, setSort] = useState('Recommended');
   const [searchInput, setSearchInput] = useState(initialSearch);
   const [searchQuery, setSearchQuery] = useState(initialSearch);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Prevent background scroll when mobile filter is open
+  useEffect(() => {
+    if (mobileFiltersOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileFiltersOpen]);
+
+  const activeFilterCount =
+    (filters.txType !== 'All' ? 1 : 0) +
+    (filters.category !== 'All categories' ? 1 : 0) +
+    (filters.priceMin || filters.priceMax ? 1 : 0) +
+    filters.conditions.length +
+    (filters.distance ? 1 : 0);
 
   const activeNav =
     filters.txType === 'Barter' ? 'Barter' :
@@ -350,14 +382,28 @@ const ExplorePage = ({
           {/* Results panel */}
           <div className="flex-1 min-w-0">
             {/* Toolbar */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <span className="text-[13.5px] text-[#8c6e5d] font-medium">
                 {loading ? 'Searching...' : `${total} result${total !== 1 ? 's' : ''}${searchQuery ? ` for "${searchQuery}"` : ''}`}
               </span>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+                {/* Mobile Filters Pill Button */}
+                <button
+                  onClick={() => setMobileFiltersOpen(true)}
+                  className="flex lg:hidden items-center gap-1.5 bg-white border border-[#ddd5c8] px-3.5 py-1.5 rounded-full text-[13px] font-semibold text-[#35190F] hover:border-[#E96B16] shadow-xs cursor-pointer"
+                >
+                  <SlidersHorizontal size={14} className="text-[#E96B16]" />
+                  <span>Filters</span>
+                  {activeFilterCount > 0 && (
+                    <span className="bg-[#E96B16] text-white text-[11px] font-bold px-1.5 py-0.2 rounded-full">
+                      {activeFilterCount}
+                    </span>
+                  )}
+                </button>
+
                 <button
                   onClick={handleCreate}
-                  className="flex items-center gap-1.5 bg-[#E96B16] text-white px-4 py-1.5 rounded-full text-[13px] font-semibold hover:bg-[#d45d0f] transition-all shadow-sm cursor-pointer"
+                  className="flex items-center gap-1.5 bg-[#E96B16] text-white px-3.5 sm:px-4 py-1.5 rounded-full text-[13px] font-semibold hover:bg-[#d45d0f] transition-all shadow-sm cursor-pointer"
                 >
                   <Plus size={14} /> List an item
                 </button>
@@ -407,7 +453,7 @@ const ExplorePage = ({
 
             {/* Items grid */}
             {!loading && listings.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
                 {listings.map(item => (
                   <ItemCard
                     key={item._id}
@@ -422,6 +468,58 @@ const ExplorePage = ({
           </div>
         </div>
       </div>
+
+      {/* ── MOBILE FILTER BOTTOM SHEET MODAL ── */}
+      {mobileFiltersOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+            onClick={() => setMobileFiltersOpen(false)}
+          />
+          <div className="fixed inset-x-0 bottom-0 max-h-[85vh] bg-white rounded-t-3xl shadow-2xl z-50 flex flex-col p-6 overflow-y-auto animate-in slide-in-from-bottom duration-300">
+            <div className="flex items-center justify-between pb-4 border-b border-[#ede8e1] mb-5">
+              <div className="flex items-center gap-2">
+                <SlidersHorizontal size={18} className="text-[#E96B16]" />
+                <h3 className="text-[1.2rem] font-extrabold text-[#35190F]">Filter Listings</h3>
+                {activeFilterCount > 0 && (
+                  <span className="bg-[#E96B16] text-white text-[11px] font-bold px-2 py-0.5 rounded-full">
+                    {activeFilterCount}
+                  </span>
+                )}
+              </div>
+              <button
+                onClick={() => setMobileFiltersOpen(false)}
+                className="p-1 rounded-full text-gray-400 hover:text-[#35190F]"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Filter Content */}
+            <div className="overflow-y-auto">
+              <FilterControls filters={filters} setFilters={setFilters} />
+            </div>
+
+            <div className="flex gap-3 pt-5 mt-4 border-t border-[#ede8e1]">
+              <button
+                onClick={() => {
+                  clearFilters();
+                  setMobileFiltersOpen(false);
+                }}
+                className="flex-1 py-3 text-[14px] font-semibold text-[#654332] hover:bg-[#FAF7F2] rounded-xl border border-[#ddd5c8] transition-colors cursor-pointer"
+              >
+                Clear all
+              </button>
+              <button
+                onClick={() => setMobileFiltersOpen(false)}
+                className="flex-1 py-3 text-[14px] font-bold bg-[#E96B16] text-white rounded-xl hover:bg-[#d45d0f] transition-all shadow-sm cursor-pointer"
+              >
+                Apply Filters
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

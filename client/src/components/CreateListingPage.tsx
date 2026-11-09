@@ -22,7 +22,7 @@ const SelectField = ({ label, value, onChange, options }: any) => (
       <select
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="w-full appearance-none border border-[#ddd5c8] rounded-xl px-4 py-3 text-[14px] text-[#35190F] bg-white outline-none focus:border-[#E96B16] focus:ring-1 focus:ring-[#E96B16]/30 cursor-pointer"
+        className="w-full appearance-none border border-[#ddd5c8] rounded-xl px-4 py-3 text-[16px] sm:text-[14px] text-[#35190F] bg-white outline-none focus:border-[#E96B16] focus:ring-1 focus:ring-[#E96B16]/30 cursor-pointer"
       >
         <option value="">Select {label.toLowerCase()}</option>
         {options.map((o: string) => <option key={o} value={o}>{o}</option>)}
@@ -42,7 +42,7 @@ const InputField = ({ label, value, onChange, type = 'text', placeholder, requir
       value={value}
       onChange={e => onChange(e.target.value)}
       placeholder={placeholder}
-      className="w-full border border-[#ddd5c8] rounded-xl px-4 py-3 text-[14px] text-[#35190F] outline-none focus:border-[#E96B16] focus:ring-1 focus:ring-[#E96B16]/30 placeholder:text-gray-400"
+      className="w-full border border-[#ddd5c8] rounded-xl px-4 py-3 text-[16px] sm:text-[14px] text-[#35190F] outline-none focus:border-[#E96B16] focus:ring-1 focus:ring-[#E96B16]/30 placeholder:text-gray-400"
     />
   </div>
 );
@@ -122,21 +122,21 @@ const CreateListingPage = ({ onBack, onSuccess }: Props) => {
   }
 
   return (
-    <div className="max-w-[780px] mx-auto px-4 py-10">
+    <div className="max-w-[780px] mx-auto px-4 py-6 sm:py-10">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-8">
-        <button onClick={onBack} className="p-2 rounded-full hover:bg-[#f4f0ec] transition-colors">
+      <div className="flex items-center gap-3 mb-6 sm:mb-8">
+        <button onClick={onBack} className="p-2 rounded-full hover:bg-[#f4f0ec] transition-colors cursor-pointer">
           <ArrowLeft size={20} className="text-[#35190F]" />
         </button>
         <div>
-          <h1 className="text-[1.8rem] font-extrabold text-[#35190F]">Create Listing</h1>
-          <p className="text-[14px] text-gray-500 mt-0.5">Share your item with the community</p>
+          <h1 className="text-[1.5rem] sm:text-[1.8rem] font-extrabold text-[#35190F]">Create Listing</h1>
+          <p className="text-[13px] sm:text-[14px] text-gray-500 mt-0.5">Share your item with the community</p>
         </div>
       </div>
 
       <div className="space-y-6">
         {/* Basic Info */}
-        <div className="bg-white rounded-2xl border border-[#ede8e1] p-6 shadow-sm">
+        <div className="bg-white rounded-2xl border border-[#ede8e1] p-4 sm:p-6 shadow-sm">
           <h3 className="flex items-center gap-2 text-[15px] font-bold text-[#35190F] mb-5">
             <FileText size={17} className="text-[#E96B16]" /> Basic Information
           </h3>
@@ -149,7 +149,7 @@ const CreateListingPage = ({ onBack, onSuccess }: Props) => {
                 onChange={e => set('description', e.target.value)}
                 placeholder="Describe your item — condition details, why you're selling, what's included..."
                 rows={4}
-                className="w-full border border-[#ddd5c8] rounded-xl px-4 py-3 text-[14px] text-[#35190F] outline-none focus:border-[#E96B16] focus:ring-1 focus:ring-[#E96B16]/30 placeholder:text-gray-400 resize-none"
+                className="w-full border border-[#ddd5c8] rounded-xl px-4 py-3 text-[16px] sm:text-[14px] text-[#35190F] outline-none focus:border-[#E96B16] focus:ring-1 focus:ring-[#E96B16]/30 placeholder:text-gray-400 resize-none"
               />
             </div>
           </div>

@@ -24,19 +24,19 @@ const Hero = ({ onSearch, onCategoryClick }: HeroProps) => {
         </div>
 
         {/* Headline */}
-        <h1 className="text-[3rem] sm:text-[3.75rem] lg:text-[4.5rem] font-extrabold leading-[1.0] tracking-tight mb-6">
+        <h1 className="text-[2.2rem] xs:text-[2.6rem] sm:text-[3.5rem] lg:text-[4.5rem] font-extrabold leading-[1.05] sm:leading-[1.0] tracking-tight mb-4 sm:mb-6">
           <span className="block text-[#35190F]">More Possibilities.</span>
           <span className="block text-[#E96B16]">A Kinder Marketplace.</span>
         </h1>
 
         {/* Subtitle */}
-        <p className="text-[#654332] text-[1.05rem] sm:text-[1.125rem] mb-9 max-w-[520px] leading-[1.6]">
+        <p className="text-[#654332] text-[0.98rem] sm:text-[1.125rem] mb-6 sm:mb-9 max-w-[520px] leading-[1.5] sm:leading-[1.6]">
           One platform. Four ways to get what you need.<br />
           Trade what you have, get what you need &mdash; no money, just community.
         </p>
 
         {/* Search Bar */}
-        <div className="w-full max-w-[540px] bg-white flex flex-col sm:flex-row items-stretch sm:items-center rounded-2xl sm:rounded-full shadow-[0_2px_20px_rgba(0,0,0,0.05)] border border-gray-100/80 mb-10 overflow-hidden">
+        <div className="w-full max-w-[540px] bg-white flex flex-col sm:flex-row items-stretch sm:items-center rounded-2xl sm:rounded-full shadow-[0_2px_20px_rgba(0,0,0,0.05)] border border-gray-100/80 mb-6 sm:mb-10 overflow-hidden">
           <div className="flex items-center flex-1 pl-5 pr-3 py-3.5 sm:py-0 sm:h-[58px]">
             <Search className="text-gray-400 mr-3 shrink-0" size={20} />
             <input 
@@ -83,8 +83,7 @@ const Hero = ({ onSearch, onCategoryClick }: HeroProps) => {
       </div>
 
       {/* ── RIGHT COLUMN ────────────────────────────────────────── */}
-      <div className="w-full lg:w-[48%] order-2 lg:order-2 relative flex justify-center lg:justify-end items-center mt-10 lg:mt-0"
-           style={{ minHeight: '560px', paddingBottom: '50px' }}>
+      <div className="w-full lg:w-[48%] order-2 lg:order-2 relative flex justify-center lg:justify-end items-center mt-6 lg:mt-0 min-h-[420px] sm:min-h-[500px] lg:min-h-[560px] pb-8 sm:pb-12">
 
         {/* ── Decorative: Striped circle top-left */}
         <div
@@ -102,7 +101,7 @@ const Hero = ({ onSearch, onCategoryClick }: HeroProps) => {
           className="absolute rounded-[40px] opacity-70"
           style={{
             width: '90%', height: '78%',
-            top: '10%', right: '-4%',
+            top: '10%', right: '0%',
             background: '#F2E1CE',
             zIndex: 0,
           }}
@@ -210,46 +209,36 @@ const Hero = ({ onSearch, onCategoryClick }: HeroProps) => {
 
         {/* ── PRODUCT PRICE CARD ─────────────────────────────── */}
         <div
-          className="absolute bg-white"
-          style={{
-            borderRadius: '26px',
-            padding: '18px 22px',
-            width: '260px',
-            left: '0px',
-            bottom: '44px',
-            zIndex: 30,
-            boxShadow: '0 16px 50px rgba(40,15,5,0.13)',
-          }}
+          className="absolute bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 w-[210px] sm:w-[260px] left-1 sm:left-0 bottom-4 sm:bottom-11 z-30 shadow-[0_16px_50px_rgba(40,15,5,0.13)]"
         >
-          <p style={{ fontWeight: 800, fontSize: '1rem', color: '#35190F', marginBottom: '12px' }}>Canon AE-1</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '9px' }}>
+          <p className="font-extrabold text-[0.95rem] sm:text-[1rem] text-[#35190F] mb-2 sm:mb-3">Canon AE-1</p>
+          <div className="flex flex-col gap-1.5 sm:gap-2">
             {/* Buy row */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: 500, color: '#2E8B57' }}>Buy</span>
-              <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#2E8B57' }}>₹28,000</span>
+            <div className="flex justify-between items-center">
+              <span className="text-[0.8rem] sm:text-[0.85rem] font-medium text-[#2E8B57]">Buy</span>
+              <span className="text-[0.85rem] sm:text-[0.9rem] font-bold text-[#2E8B57]">₹28,000</span>
             </div>
             {/* Rent row */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: 500, color: '#1769AA' }}>Rent</span>
-              <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#1769AA' }}>₹500/day</span>
+            <div className="flex justify-between items-center">
+              <span className="text-[0.8rem] sm:text-[0.85rem] font-medium text-[#1769AA]">Rent</span>
+              <span className="text-[0.85rem] sm:text-[0.9rem] font-bold text-[#1769AA]">₹500/day</span>
             </div>
             {/* Barter row */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: '0.85rem', fontWeight: 500, color: '#E96B16' }}>Barter</span>
-              <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#E96B16' }}>Open to swap</span>
+            <div className="flex justify-between items-center">
+              <span className="text-[0.8rem] sm:text-[0.85rem] font-medium text-[#E96B16]">Barter</span>
+              <span className="text-[0.85rem] sm:text-[0.9rem] font-extrabold text-[#E96B16]">Open to swap</span>
             </div>
           </div>
         </div>
 
-        {/* ── CURVED ARROW ───────────────────────────────────── */}
+        {/* ── CURVED ARROW (Desktop & Tablet only) ─────────────────────────── */}
         <svg
+          className="hidden sm:block absolute z-30"
           style={{
-            position: 'absolute',
             bottom: '86px',
             left: '255px',
             width: '70px',
             height: '64px',
-            zIndex: 30,
           }}
           viewBox="0 0 70 64"
           fill="none"
@@ -261,27 +250,12 @@ const Hero = ({ onSearch, onCategoryClick }: HeroProps) => {
 
         {/* ── SUSTAINABILITY CARD ─────────────────────────────── */}
         <div
-          className="absolute bg-white flex items-center gap-3"
-          style={{
-            borderRadius: '18px',
-            padding: '10px 14px',
-            width: '210px',
-            right: '0px',
-            bottom: '10px',
-            zIndex: 30,
-            boxShadow: '0 12px 36px rgba(40,15,5,0.10)',
-          }}
+          className="absolute bg-white flex items-center gap-2.5 sm:gap-3 rounded-2xl p-2.5 sm:p-3.5 w-[170px] sm:w-[210px] right-0 bottom-2 sm:bottom-2.5 z-30 shadow-[0_12px_36px_rgba(40,15,5,0.10)]"
         >
-          <div style={{
-            width: '34px', height: '34px',
-            borderRadius: '50%',
-            background: '#EAF5EC',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0,
-          }}>
-            <Leaf size={16} strokeWidth={2} color="#2E8B57" />
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#EAF5EC] flex items-center justify-center shrink-0">
+            <Leaf size={15} strokeWidth={2} color="#2E8B57" />
           </div>
-          <span style={{ fontSize: '0.78rem', fontWeight: 600, color: '#35190F', lineHeight: 1.35 }}>
+          <span className="text-[0.72rem] sm:text-[0.78rem] font-semibold text-[#35190F] leading-tight sm:leading-[1.35]">
             Same item.<br />More ways to own.
           </span>
         </div>
@@ -291,39 +265,31 @@ const Hero = ({ onSearch, onCategoryClick }: HeroProps) => {
       </div>{/* end two column row */}
 
       {/* ── STATS STRIP ─────────────────────────────────────────── */}
-      <div className="w-full bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 px-8 py-5 flex flex-wrap lg:flex-nowrap justify-between items-center gap-y-4 gap-x-4">
+      <div className="w-full bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 px-5 sm:px-8 py-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 items-center">
 
         <div className="flex flex-col gap-1">
-          <span className="font-extrabold text-[1.5rem] text-[#35190F] leading-none">10K+</span>
-          <span className="text-[#654332] text-sm font-medium">Active Members</span>
+          <span className="font-extrabold text-[1.4rem] sm:text-[1.5rem] text-[#35190F] leading-none">10K+</span>
+          <span className="text-[#654332] text-xs sm:text-sm font-medium">Active Members</span>
         </div>
 
-        <div className="hidden lg:block w-px h-10 bg-gray-200"></div>
-
         <div className="flex flex-col gap-1">
-          <span className="font-extrabold text-[1.5rem] text-[#E96B16] leading-none">25K+</span>
-          <span className="text-[#654332] text-sm font-medium">Items Listed</span>
+          <span className="font-extrabold text-[1.4rem] sm:text-[1.5rem] text-[#E96B16] leading-none">25K+</span>
+          <span className="text-[#654332] text-xs sm:text-sm font-medium">Items Listed</span>
         </div>
 
-        <div className="hidden lg:block w-px h-10 bg-gray-200"></div>
-
         <div className="flex flex-col gap-1">
-          <span className="font-extrabold text-[1.15rem] text-[#35190F]">4 Ways</span>
-          <span className="text-[#654332] text-sm font-medium">Buy, Sell, Rent, Barter</span>
+          <span className="font-extrabold text-[1.1rem] sm:text-[1.15rem] text-[#35190F]">4 Ways</span>
+          <span className="text-[#654332] text-xs sm:text-sm font-medium">Buy, Sell, Rent, Barter</span>
         </div>
 
-        <div className="hidden lg:block w-px h-10 bg-gray-200"></div>
-
         <div className="flex flex-col gap-1">
-          <span className="font-extrabold text-[1.15rem] text-[#35190F]">Safe &amp; Trusted</span>
-          <span className="text-[#654332] text-sm font-medium">Verified Community</span>
+          <span className="font-extrabold text-[1.1rem] sm:text-[1.15rem] text-[#35190F]">Safe &amp; Trusted</span>
+          <span className="text-[#654332] text-xs sm:text-sm font-medium">Verified Community</span>
         </div>
 
-        <div className="hidden lg:block w-px h-10 bg-gray-200"></div>
-
-        <div className="flex flex-col gap-1">
-          <span className="font-extrabold text-[1.15rem] text-[#35190F]">Sustainable</span>
-          <span className="text-[#654332] text-sm font-medium">Give items a new life</span>
+        <div className="flex flex-col gap-1 col-span-2 sm:col-span-1">
+          <span className="font-extrabold text-[1.1rem] sm:text-[1.15rem] text-[#35190F]">Sustainable</span>
+          <span className="text-[#654332] text-xs sm:text-sm font-medium">Give items a new life</span>
         </div>
 
       </div>{/* end stats strip */}

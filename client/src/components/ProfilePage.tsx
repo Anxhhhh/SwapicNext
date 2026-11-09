@@ -97,9 +97,18 @@ const ProfilePage = ({ onHomeClick, onCreateListing, onItemClick }: Props) => {
           {/* Left Sidebar: User Info & Navigation */}
           <div className="w-full md:w-[320px] shrink-0">
             {/* User Profile Card */}
-            <div className="bg-white rounded-2xl border border-[#ede8e1] p-6 mb-6 shadow-sm relative overflow-hidden">
+            <div className="bg-white rounded-2xl border border-[#ede8e1] p-6 mb-4 md:mb-6 shadow-sm relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-[#E96B16]/20 to-[#f9d7c0] z-0" />
               
+              {/* Quick Sign Out for mobile */}
+              <button
+                onClick={handleLogout}
+                className="md:hidden absolute top-3 right-3 z-20 bg-white/80 backdrop-blur-sm p-2 rounded-full text-gray-500 hover:text-red-500 shadow-sm"
+                title="Sign Out"
+              >
+                <LogOut size={16} />
+              </button>
+
               <div className="relative z-10 flex flex-col items-center mt-6">
                 <div className="w-24 h-24 bg-white rounded-full p-1.5 shadow-md mb-4 relative group cursor-pointer">
                   <div className="w-full h-full bg-[#f4f0ec] rounded-full flex items-center justify-center overflow-hidden border-2 border-[#E96B16]/20">
@@ -124,8 +133,8 @@ const ProfilePage = ({ onHomeClick, onCreateListing, onItemClick }: Props) => {
               </div>
             </div>
 
-            {/* Navigation Menu */}
-            <div className="bg-white rounded-2xl border border-[#ede8e1] overflow-hidden shadow-sm">
+            {/* Navigation Menu (Desktop Sidebar md+) */}
+            <div className="hidden md:block bg-white rounded-2xl border border-[#ede8e1] overflow-hidden shadow-sm">
               <div className="flex flex-col">
                 {tabs.map(tab => (
                   <button
@@ -163,6 +172,35 @@ const ProfilePage = ({ onHomeClick, onCreateListing, onItemClick }: Props) => {
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* Mobile Horizontal Tabs Segment (<md) */}
+          <div className="flex md:hidden items-center gap-2 overflow-x-auto pb-2 mb-4 scrollbar-hide -mx-4 px-4">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-[13.5px] font-bold shrink-0 transition-all cursor-pointer ${
+                  activeTab === tab.id
+                    ? 'bg-[#E96B16] text-white shadow-sm'
+                    : 'bg-white text-[#654332] border border-[#ede8e1]'
+                }`}
+              >
+                {tab.icon}
+                <span>{tab.label}</span>
+                {Boolean(tab.badge && tab.badge > 0) && (
+                  <span
+                    className={`text-[10.5px] font-extrabold px-1.5 py-0.2 rounded-full ${
+                      activeTab === tab.id
+                        ? 'bg-white text-[#E96B16]'
+                        : 'bg-[#E96B16] text-white'
+                    }`}
+                  >
+                    {tab.badge}
+                  </span>
+                )}
+              </button>
+            ))}
           </div>
 
           {/* Right Content Area */}

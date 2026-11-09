@@ -517,7 +517,7 @@ const SignInForm = ({
       </div>
 
       {/* Social buttons - Google does not require OTP */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 mb-6">
         <button
           onClick={handleGoogleSignIn}
           disabled={loading}
@@ -726,7 +726,7 @@ const SignUpForm = ({
       </div>
 
       {/* Social buttons - Google doesn't require OTP */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 mb-6">
         <button
           onClick={handleGoogleSignIn}
           disabled={loading}
@@ -813,7 +813,7 @@ const LoginPageContent = ({ onBack }: { onBack?: () => void }) => {
         </div>
 
         {/* Form area */}
-        <div className="flex-1 flex flex-col justify-center px-10 py-8 max-w-[460px] mx-auto w-full">
+        <div className="flex-1 flex flex-col justify-center px-5 sm:px-8 md:px-10 py-6 sm:py-8 max-w-[460px] mx-auto w-full">
           {/* Logo */}
           <div
             className="flex items-center gap-2.5 mb-8 cursor-pointer group"

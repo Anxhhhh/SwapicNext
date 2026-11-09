@@ -82,7 +82,7 @@ const Footer = ({ onExploreClick }: { onExploreClick?: () => void }) => {
 
           {/* Right: email form */}
           <div className="flex flex-col items-start gap-1.5 w-full md:w-auto md:max-w-[420px]">
-            <div className="flex items-center gap-2 w-full">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full">
               <div className="flex items-center flex-1 bg-white border border-gray-200 rounded-full px-4 h-[46px] shadow-sm gap-2 focus-within:ring-2 focus-within:ring-[#E96B16]/25 transition-all">
                 <Mail size={16} className="text-gray-400 shrink-0" strokeWidth={2} />
                 <input
@@ -93,7 +93,7 @@ const Footer = ({ onExploreClick }: { onExploreClick?: () => void }) => {
                   className="flex-1 bg-transparent border-none outline-none text-[0.9rem] text-[#35190F] placeholder:text-gray-400"
                 />
               </div>
-              <button className="flex items-center gap-2 bg-[#E96B16] hover:bg-[#d45d0f] active:scale-95 text-white font-bold text-[0.88rem] px-5 h-[46px] rounded-full transition-all whitespace-nowrap shadow-[0_4px_14px_rgba(233,107,22,0.3)]">
+              <button className="flex items-center justify-center gap-2 bg-[#E96B16] hover:bg-[#d45d0f] active:scale-95 text-white font-bold text-[0.88rem] px-5 h-[46px] rounded-full transition-all whitespace-nowrap shadow-[0_4px_14px_rgba(233,107,22,0.3)] cursor-pointer">
                 Stay Updated
                 <ArrowRight size={15} strokeWidth={2.5} />
               </button>
@@ -118,10 +118,10 @@ const Footer = ({ onExploreClick }: { onExploreClick?: () => void }) => {
           style={{ background: "linear-gradient(160deg, #2E1408 0%, #1C0C03 100%)" }}
         >
           {/* Main grid */}
-          <div className="px-8 md:px-12 pt-12 pb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1.6fr] gap-10">
+          <div className="px-6 sm:px-8 md:px-12 pt-10 sm:pt-12 pb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1.6fr] gap-8 sm:gap-10">
 
             {/* Col 1: Brand */}
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 sm:col-span-2 lg:col-span-1">
               {/* Logo */}
               <div className="flex items-center gap-2.5">
                 <div className="bg-white/10 p-1.5 rounded-lg">
@@ -179,7 +179,7 @@ const Footer = ({ onExploreClick }: { onExploreClick?: () => void }) => {
             ))}
 
             {/* Col 5: App download */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-full bg-[#2E8B57]/20 flex items-center justify-center">
                   <Leaf size={16} className="text-[#5FAD74]" strokeWidth={2} />

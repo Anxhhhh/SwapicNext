@@ -272,16 +272,16 @@ const HowItWorks = () => (
         <span className="text-[#E96B16] text-[11px] font-bold tracking-[0.25em] uppercase mb-3">
           Simple Steps
         </span>
-        <h2 className="text-[2.6rem] font-extrabold text-[#35190F] leading-tight mb-3">
+        <h2 className="text-[2rem] sm:text-[2.6rem] font-extrabold text-[#35190F] leading-tight mb-3">
           How <span className="text-[#E96B16]">SWAPIC</span> works
         </h2>
-        <p className="text-[#7A5C4A] text-[1rem]">
+        <p className="text-[#7A5C4A] text-[0.95rem] sm:text-[1rem]">
           One marketplace. Four ways to get what you need.
         </p>
       </div>
 
-      {/* ── Steps row ── */}
-      <div className="flex items-start gap-0">
+      {/* ── Steps: Desktop row with dashed arrows (lg+) ── */}
+      <div className="hidden lg:flex items-start gap-0">
         {STEPS.map((step, i) => (
           <React.Fragment key={step.number}>
             <StepCard {...step} bg={step.cardBg} />
@@ -290,9 +290,16 @@ const HowItWorks = () => (
         ))}
       </div>
 
+      {/* ── Steps: Mobile & Tablet Responsive Grid (<lg) ── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:hidden gap-5">
+        {STEPS.map((step) => (
+          <StepCard key={step.number} {...step} bg={step.cardBg} />
+        ))}
+      </div>
+
       {/* ── Safety banner ── */}
       <div
-        className="mt-10 rounded-2xl flex items-center gap-5 px-8 py-5"
+        className="mt-10 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 px-5 sm:px-8 py-4 sm:py-5"
         style={{
           background: 'linear-gradient(135deg, #FFF4EC 0%, #FDEEDE 100%)',
           border: '1px solid rgba(233,107,22,0.15)',

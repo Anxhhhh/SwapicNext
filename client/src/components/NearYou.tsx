@@ -75,7 +75,7 @@ const FloatingBadge = ({
   label, sub, style
 }: { label: string; sub: string; style: React.CSSProperties }) => (
   <div
-    className="absolute bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.09)] px-3.5 py-2.5 flex items-center gap-2.5 pointer-events-none"
+    className="hidden sm:flex absolute bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.09)] px-3.5 py-2.5 items-center gap-2.5 pointer-events-none"
     style={style}
   >
     <div className="w-7 h-7 rounded-full bg-[#E96B16]/10 flex items-center justify-center shrink-0">

@@ -228,7 +228,7 @@ const ItemDetailPage = ({ listingId, onBack, onLoginRequired }: Props) => {
     new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
   return (
-    <div className="max-w-[1100px] mx-auto px-4 py-8">
+    <div className="max-w-[1100px] mx-auto px-4 py-6 sm:py-8 pb-28 lg:pb-8">
       {/* Back button */}
       <button
         onClick={onBack}
@@ -427,8 +427,8 @@ const ItemDetailPage = ({ listingId, onBack, onLoginRequired }: Props) => {
 
       {/* ─────────────────── Hybrid Swap & Top-Up Modal ─────────────────── */}
       {showSwapModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+          <div className="bg-white rounded-t-3xl sm:rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 max-h-[88vh] overflow-y-auto">
             <button
               onClick={() => setShowSwapModal(false)}
               className="absolute top-5 right-5 text-gray-400 hover:text-[#35190F]"
@@ -570,8 +570,8 @@ const ItemDetailPage = ({ listingId, onBack, onLoginRequired }: Props) => {
 
       {/* ─────────────────── Contact Seller Modal ─────────────────── */}
       {showContactModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+          <div className="bg-white rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 sm:p-6 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
             <button
               onClick={() => setShowContactModal(false)}
               className="absolute top-4 right-4 text-gray-400 hover:text-[#35190F]"
@@ -598,13 +598,13 @@ const ItemDetailPage = ({ listingId, onBack, onLoginRequired }: Props) => {
                 <button
                   type="button"
                   onClick={() => setShowContactModal(false)}
-                  className="px-4 py-2 text-[14px] font-medium text-gray-600 hover:bg-gray-100 rounded-lg"
+                  className="px-4 py-2 text-[14px] font-medium text-gray-600 hover:bg-gray-100 rounded-lg cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-[#E96B16] text-white px-5 py-2 rounded-lg font-bold text-[14px] flex items-center gap-2 hover:bg-[#d45d0f]"
+                  className="bg-[#E96B16] text-white px-5 py-2 rounded-lg font-bold text-[14px] flex items-center gap-2 hover:bg-[#d45d0f] cursor-pointer"
                 >
                   <Send size={15} /> Send Message
                 </button>
@@ -613,6 +613,52 @@ const ItemDetailPage = ({ listingId, onBack, onLoginRequired }: Props) => {
           </div>
         </div>
       )}
+
+      {/* ── STICKY MOBILE ACTION BAR (<lg) ── */}
+      <div className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-[#ede8e1] p-3.5 px-4 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] z-40 flex items-center justify-between gap-3 lg:hidden">
+        <div className="flex flex-col min-w-0">
+          <span className="text-[10.5px] font-bold text-gray-400 uppercase tracking-wider leading-none">
+            {listing.type === 'Barter' ? 'Trade' : listing.type === 'Rent' ? 'Rental' : 'Price'}
+          </span>
+          <span className="font-extrabold text-[1.1rem] text-[#35190F] truncate mt-0.5">
+            {listing.type === 'Barter' ? (
+              <span className="text-emerald-600">Open to swap</span>
+            ) : listing.type === 'Rent' ? (
+              `₹${(listing.rentPerDay || 0).toLocaleString('en-IN')}/day`
+            ) : (
+              `₹${(listing.price || 0).toLocaleString('en-IN')}`
+            )}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            onClick={handleSave}
+            className={`p-2.5 rounded-xl border-2 transition-colors cursor-pointer ${
+              saved ? 'bg-[#E96B16]/10 border-[#E96B16] text-[#E96B16]' : 'border-[#ddd5c8] text-gray-400 hover:border-[#E96B16]'
+            }`}
+            aria-label="Save to wishlist"
+          >
+            <Heart size={18} className={saved ? 'fill-[#E96B16]' : ''} />
+          </button>
+          {listing.type === 'Barter' ? (
+            <button
+              onClick={handleOpenSwapModal}
+              className="bg-[#059669] hover:bg-[#047857] text-white font-bold text-[13.5px] px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-sm cursor-pointer"
+            >
+              <ArrowRightLeft size={16} /> Propose Swap
+            </button>
+          ) : (
+            <button
+              disabled={isPaying}
+              onClick={handlePayment}
+              className="bg-[#E96B16] hover:bg-[#d45d0f] text-white font-bold text-[13.5px] px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-sm cursor-pointer disabled:opacity-70"
+            >
+              <CreditCard size={16} />
+              {isPaying ? 'Processing...' : listing.type === 'Rent' ? 'Rent Now' : 'Buy Now'}
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
