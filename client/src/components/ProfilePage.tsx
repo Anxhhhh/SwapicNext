@@ -91,7 +91,7 @@ const ProfilePage = ({ onHomeClick, onCreateListing, onItemClick }: Props) => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex-1 max-w-[1240px] mx-auto w-full px-4 py-10">
+      <div className="flex-1 max-w-[1240px] mx-auto w-full px-4 py-6 md:py-10 pb-24 md:pb-10">
         <div className="flex flex-col md:flex-row gap-8">
           
           {/* Left Sidebar: User Info & Navigation */}

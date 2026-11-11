@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
+import { Analytics } from "@vercel/analytics/next";
+import MobileBottomNav from "@/src/components/MobileBottomNav";
 
 export const metadata: Metadata = {
   title: "SWAPIC - A Kinder Marketplace",
@@ -29,7 +31,9 @@ export default function RootLayout({
       <body className="min-h-screen bg-[#FAF7F2] antialiased">
         <Providers>
           {children}
+          <MobileBottomNav />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

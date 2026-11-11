@@ -332,7 +332,7 @@ const ExplorePage = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] flex flex-col">
+    <div className="min-h-screen bg-[#FAF7F2] flex flex-col pb-20 md:pb-0">
       <Navbar
         onHomeClick={onHomeClick}
         onExploreClick={onExploreClick}

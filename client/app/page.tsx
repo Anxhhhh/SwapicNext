@@ -10,6 +10,7 @@ import FeaturedListings from '@/src/components/FeaturedListings';
 import NearYou from '@/src/components/NearYou';
 import Footer from '@/src/components/Footer';
 import FadeIn from '@/src/components/FadeIn';
+import MobileHomeView from '@/src/components/MobileHomeView';
 import { useAuthStore } from '@/src/store/authStore';
 
 export default function Home() {
@@ -46,60 +47,75 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full bg-[#FAF7F2]">
-      <Navbar
-        onHomeClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        onExploreClick={handleExploreClick}
-        onLoginClick={() => router.push('/login')}
-        onProfileClick={() => router.push('/profile')}
-        onCreateListing={handleCreateListing}
-        onSearch={handleSearch}
-        activeNav="Home"
-      />
-
-      <FadeIn delay={0.1}>
-        <Hero
+      {/* ── MOBILE APP VIEW (<md, Flipkart style) ── */}
+      <div className="block md:hidden pb-16">
+        <MobileHomeView
           onSearch={handleSearch}
           onCategoryClick={handleCategoryClick}
-        />
-      </FadeIn>
-
-      <FadeIn delay={0.1}>
-        <FourWays
           onSelectType={handleTypeClick}
           onCreateListing={handleCreateListing}
-        />
-      </FadeIn>
-
-      <FadeIn delay={0.1}>
-        <div id="how-it-works">
-          <HowItWorks />
-        </div>
-      </FadeIn>
-
-      <FadeIn delay={0.1}>
-        <BrowseCategories
-          onCategoryClick={handleCategoryClick}
-          onExploreClick={handleExploreClick}
-        />
-      </FadeIn>
-
-      <FadeIn delay={0.1}>
-        <FeaturedListings
           onItemClick={handleItemClick}
-          onExploreClick={handleExploreClick}
         />
-      </FadeIn>
-
-      <FadeIn delay={0.1}>
-        <NearYou
-          onCreateListing={handleCreateListing}
-          onExploreClick={handleExploreClick}
-        />
-      </FadeIn>
-
-      <FadeIn delay={0.1}>
         <Footer onExploreClick={handleExploreClick} />
-      </FadeIn>
+      </div>
+
+      {/* ── DESKTOP & TABLET VIEW (md+) ── */}
+      <div className="hidden md:block">
+        <Navbar
+          onHomeClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onExploreClick={handleExploreClick}
+          onLoginClick={() => router.push('/login')}
+          onProfileClick={() => router.push('/profile')}
+          onCreateListing={handleCreateListing}
+          onSearch={handleSearch}
+          activeNav="Home"
+        />
+
+        <FadeIn delay={0.1}>
+          <Hero
+            onSearch={handleSearch}
+            onCategoryClick={handleCategoryClick}
+          />
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <FourWays
+            onSelectType={handleTypeClick}
+            onCreateListing={handleCreateListing}
+          />
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <div id="how-it-works">
+            <HowItWorks />
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <BrowseCategories
+            onCategoryClick={handleCategoryClick}
+            onExploreClick={handleExploreClick}
+          />
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <FeaturedListings
+            onItemClick={handleItemClick}
+            onExploreClick={handleExploreClick}
+          />
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <NearYou
+            onCreateListing={handleCreateListing}
+            onExploreClick={handleExploreClick}
+          />
+        </FadeIn>
+
+        <FadeIn delay={0.1}>
+          <Footer onExploreClick={handleExploreClick} />
+        </FadeIn>
+      </div>
     </div>
   );
 }

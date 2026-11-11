@@ -122,7 +122,7 @@ const CreateListingPage = ({ onBack, onSuccess }: Props) => {
   }
 
   return (
-    <div className="max-w-[780px] mx-auto px-4 py-6 sm:py-10">
+    <div className="max-w-[780px] mx-auto px-4 py-6 sm:py-10 pb-24 sm:pb-10">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6 sm:mb-8">
         <button onClick={onBack} className="p-2 rounded-full hover:bg-[#f4f0ec] transition-colors cursor-pointer">
